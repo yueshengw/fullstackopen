@@ -9,7 +9,20 @@ const Button = ({ text, onClick }) => {
 
 const Display = ({ text, value, symbol }) => {
   return (
-    <div>{text}: {value}{symbol}</div>
+    <div>
+      <table>
+        <tbody>
+      <tr>
+      <td>
+        {text} 
+      </td>
+      <td>
+        {value}{symbol}
+      </td>
+    </tr>
+    </tbody>
+      </table>
+    </div>
   )
 }
 //value === null?<div>{text}: No Value yet</div>:<div>{text}: {value}{symbol}</div>
