@@ -9,10 +9,10 @@ const Button = ({ text, onClick }) => {
 
 const Display = ({ text, value, symbol }) => {
   return (
-    value === null?<div>{text}: No Value yet</div>:<div>{text}: {value}{symbol}</div>
+    <div>{text}: {value}{symbol}</div>
   )
 }
-
+//value === null?<div>{text}: No Value yet</div>:<div>{text}: {value}{symbol}</div>
 const Statistics = ({ count, data }) => {
   const info = 
       <>
