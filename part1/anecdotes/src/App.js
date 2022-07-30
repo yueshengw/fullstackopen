@@ -55,13 +55,7 @@ const App = () => {
 
   useEffect(() => {
     nextAnecdote()
-    /*setInterval(() => {
-      console.log(generateRandNum(anecdotes.length))
-    }, 1)
-    */
     const array1 = [1, 3, 2, 3];
-
-    //console.log(Math.max(...array1))
     setVotes(new Array(anecdotes.length).fill(0))
   }, [])
 
