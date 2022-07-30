@@ -9,32 +9,32 @@ const Button = ({ text, onClick }) => {
 
 const Display = ({ text, value, symbol }) => {
   return (
-    <div>
-      <table>
-        <tbody>
+    <>
       <tr>
-      <td>
-        {text} 
-      </td>
-      <td>
-        {value}{symbol}
-      </td>
+        <td>
+          {text} 
+        </td>
+        <td>
+          {value}{symbol}
+        </td>
     </tr>
-    </tbody>
-      </table>
-    </div>
+    </>
   )
 }
 //value === null?<div>{text}: No Value yet</div>:<div>{text}: {value}{symbol}</div>
 const Statistics = ({ count, data }) => {
   const info = 
       <>
-      <Display text='good' value={data.good} />
-      <Display text='neutral' value={data.neutral} />
-      <Display text='bad' value={data.bad} />
-      <Display text='all' value={data.all} />
-      <Display text='average' value={data.average} />
-      <Display text='positive' value={data.positive} symbol='%'/>
+      <table>
+        <tbody>
+          <Display text='good' value={data.good} />
+          <Display text='neutral' value={data.neutral} />
+          <Display text='bad' value={data.bad} />
+          <Display text='all' value={data.all} />
+          <Display text='average' value={data.average} />
+          <Display text='positive' value={data.positive} symbol='%'/>
+        </tbody>
+      </table>
       </>
   return (
     <>
@@ -49,23 +49,21 @@ const App = () => {
   const [bad, setBad] = useState(0)
   const [all, setAll] = useState(0)
   const [average, setAverage] = useState(0)
-  const [positive, setPositive] = useState(null)
+  const [positive, setPositive] = useState(100)
   const [data, setData] = useState({})
   const voteGood = () => setGood(good + 1)
   const voteNeutral = () => setNeutral(neutral + 1)
   const voteBad = () => setBad(bad + 1)
 
-  useEffect(() => setAll(good+neutral+bad), [good, neutral, bad])
-
   useEffect(() => {
+    setAll(good+neutral+bad)
+
     if (good + bad > 0) {
       setAverage((good + bad*-1)/(good+neutral+bad))
     }
-  }, [good, neutral, bad])
 
-  useEffect(() => {
-    if (good + neutral + bad > 0) {
-      setPositive(good / (good + neutral + bad) * 100)
+    if (good + bad > 0) {
+      setPositive(good / (good + bad) * 100)
     }
   }, [good, neutral, bad])
 
@@ -78,7 +76,7 @@ const App = () => {
       'average':average,
       'positive':positive
     })
-  },[good, neutral, bad])
+  },[good, neutral, bad, all, average, positive])
 
   return (
     <div>
