@@ -7,6 +7,12 @@ const Button = ({ text, onClick }) => {
   )
 }
 
+const Display = ({ text }) => {
+  return (
+    <div>{text}</div>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -19,6 +25,8 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(null)
+  const [votes, setVotes] = useState([])
+  const [voteStatus, setVoteStatus] = useState(true)
 
   const generateRandNum = (max) => {
     let temp = Math.floor(Math.random() * max)
@@ -28,7 +36,18 @@ const App = () => {
     return temp
   }
 
-  const nextAnecdote = () => setSelected(generateRandNum(anecdotes.length))
+  const nextAnecdote = () => {
+    setSelected(generateRandNum(anecdotes.length))
+    setVoteStatus(true)
+  }
+  const voteAnecdote = () => {
+    if (voteStatus === true) {
+      const copy = [...votes]
+      copy[selected] += 1
+      setVotes(copy)
+      setVoteStatus(false)
+    }
+  }
 
   useEffect(() => {
     nextAnecdote()
@@ -36,11 +55,14 @@ const App = () => {
       console.log(generateRandNum(anecdotes.length))
     }, 1)
     */
+    setVotes(new Array(anecdotes.length).fill(0))
   }, [])
 
   return (
     <div>
-      {anecdotes[selected]}<br />
+      <Display text={anecdotes[selected]} />
+      <Display text={`has ${votes[selected]} votes`} />
+      <Button text='vote' onClick={voteAnecdote} />
       <Button text='next anecdote' onClick={nextAnecdote} />
     </div >
   )
