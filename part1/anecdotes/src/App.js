@@ -9,7 +9,7 @@ const Button = ({ text, onClick }) => {
 
 const Display = ({ text }) => {
   return (
-    <div>{text}</div>
+    text != null ? <div>{text}</div> : <div>Nothing to show yet</div>
   )
 }
 
@@ -27,6 +27,7 @@ const App = () => {
   const [selected, setSelected] = useState(null)
   const [votes, setVotes] = useState([])
   const [voteStatus, setVoteStatus] = useState(true)
+  const [mostPopAnecdote, setMostPopAnecdote] = useState(null)
 
   const generateRandNum = (max) => {
     let temp = Math.floor(Math.random() * max)
@@ -40,6 +41,7 @@ const App = () => {
     setSelected(generateRandNum(anecdotes.length))
     setVoteStatus(true)
   }
+
   const voteAnecdote = () => {
     if (voteStatus === true) {
       const copy = [...votes]
@@ -49,21 +51,33 @@ const App = () => {
     }
   }
 
+  const anecdoteWithMostVote = () => anecdotes[votes.indexOf(Math.max.apply(Math, votes))]
+
   useEffect(() => {
     nextAnecdote()
     /*setInterval(() => {
       console.log(generateRandNum(anecdotes.length))
     }, 1)
     */
+    const array1 = [1, 3, 2, 3];
+
+    //console.log(Math.max(...array1))
     setVotes(new Array(anecdotes.length).fill(0))
   }, [])
 
+  useEffect(() => {
+    Math.max.apply(Math, votes) > 0 && setMostPopAnecdote(anecdoteWithMostVote())
+  }, [votes])
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <Display text={anecdotes[selected]} />
       <Display text={`has ${votes[selected]} votes`} />
       <Button text='vote' onClick={voteAnecdote} />
       <Button text='next anecdote' onClick={nextAnecdote} />
+      <h1>Anecdote with the most vote</h1>
+      <Display text={mostPopAnecdote} />
     </div >
   )
 }
