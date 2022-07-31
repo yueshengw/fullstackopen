@@ -17,15 +17,17 @@ const Content = (props) => {
     )
 }
 
-const Total = (props) => {
-    console.log(props.parts)
+const Total = ({ parts }) => {
+    console.log(parts)
     function findTotal() {
         let total = 0
-        props.parts.forEach(part => total += part.exercises)
+        parts.forEach(part => total += part.exercises)
         return total
     }
     return (
-        <p>Number of exercises: {findTotal()}</p>
+        <p>Number of exercises: {parts.map(part => part.exercises).reduce((iv, cv) => {
+            return iv + cv
+        })}</p>
     )
 } //Done
 
