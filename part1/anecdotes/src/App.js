@@ -51,7 +51,10 @@ const App = () => {
     }
   }
 
-  const anecdoteWithMostVote = () => anecdotes[votes.indexOf(Math.max.apply(Math, votes))]
+  const anecdoteWithMostVoteV1 = () => anecdotes[votes.indexOf(Math.max.apply(Math, votes))]
+  const anecdoteWithMostVoteV2 = () => {
+    anecdotes.map((anecdote, index) => votes[index] === Math.max(...votes) && anecdote[index])
+  }
 
   useEffect(() => {
     nextAnecdote()
@@ -60,7 +63,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    Math.max.apply(Math, votes) > 0 && setMostPopAnecdote(anecdoteWithMostVote())
+    Math.max.apply(Math, votes) > 0 && setMostPopAnecdote(anecdoteWithMostVoteV1())
   }, [votes])
 
   return (
