@@ -24,9 +24,9 @@ const Total = ({ parts }) => {
         return total
     }
     return (
-        <h4>Number of exercises: {parts.map(part => part.exercises).reduce((iv, cv) => {
+        <h4>total of {parts.map(part => part.exercises).reduce((iv, cv) => {
             return iv + cv
-        })}</h4>
+        })} exercises</h4>
     )
 } //Done
 
