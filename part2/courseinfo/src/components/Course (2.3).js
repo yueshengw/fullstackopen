@@ -4,7 +4,7 @@ import { useState } from 'react'
 const Header = (props) => {
     return (
         <>
-            <h2>{props.course.name}</h2>
+            <h1>{props.course.name}</h1>
         </>
     )
 }
@@ -25,9 +25,9 @@ const Total = ({ parts }) => {
         return total
     }
     return (
-        <h4>Number of exercises: {parts.map(part => part.exercises).reduce((iv, cv) => {
+        <p>Number of exercises: {parts.map(part => part.exercises).reduce((iv, cv) => {
             return iv + cv
-        })}</h4>
+        })}</p>
     )
 } //Done
 
@@ -41,4 +41,4 @@ const Course = ({ course }) => {
     )
 }
 
-export default Course
+//export default Course
