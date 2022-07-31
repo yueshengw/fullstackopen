@@ -27,7 +27,7 @@ const Total = (props) => {
     return (
         <p>Number of exercises: {findTotal()}</p>
     )
-}
+} //Done
 
 const Course = ({ course }) => {
     return (
