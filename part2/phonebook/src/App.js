@@ -11,6 +11,33 @@ const Filter = ({ onChange, value, id }) => {
   )
 }
 
+const PersonForm = ({onChange, nameValue, numberValue, onSubmit}) => {
+  return (      
+    <form>
+      <div>
+        name: <input onChange={onChange} value={nameValue} id='name' />
+      </div>
+      <div>
+        number: <input onChange={onChange} value={numberValue} id='number' />
+      </div>
+      <div>
+        <button type="submit" onClick={onSubmit}>add</button>
+      </div>
+    </form>
+  )
+}
+
+const DisplayPersons = ({persons, filter}) => {
+  return(
+    <div> 
+    {persons.map(person => {
+      const displayContactFormat = <div key={person.name}>{person.name} {person.number !== undefined && person.number}</div>;
+      return filter===''?displayContactFormat:person.name.toLowerCase().includes(filter
+        .toLowerCase()) && displayContactFormat
+    })}
+    </div>
+  )
+}
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -47,6 +74,7 @@ const App = () => {
     else{
       alert(`${personObject.name} is already added to phonebook`)
     }
+    console.log('hi')
     setNewName('')
     setNewNumber('')
     //console.log(persons)
@@ -83,24 +111,9 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter onChange={handleInputChange} value={filter} id='filter' />
       <h2>add a new</h2>
-      <form>
-        <div>
-          name: <input onChange={handleInputChange} value={newName} id='name' />
-        </div>
-        <div>
-          number: <input onChange={handleInputChange} value={newNumber} id='number' />
-        </div>
-        <div>
-          <button type="submit" onClick={onSubmit}>add</button>
-        </div>
-
-      </form>
+      <PersonForm onChange={handleInputChange} nameValue={newName} numberValue={newNumber} onSubmit={onSubmit}/>
       <h2>Numbers</h2>
-      {persons.map(person => {
-        const displayContactFormat = <div key={person.name}>{person.name} {person.number !== undefined && person.number}</div>;
-        return filter===''?displayContactFormat:person.name.toLowerCase().includes(filter
-          .toLowerCase()) && displayContactFormat
-        })}
+      <DisplayPersons persons={persons} filter={filter}/>
     </div>
   )
 }
