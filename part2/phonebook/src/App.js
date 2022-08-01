@@ -14,7 +14,6 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
-  //console.log(newNumber)
 
   useEffect(() => {
     console.log(filter)
@@ -34,20 +33,16 @@ const App = () => {
      //false is no duplicates (based on name)
     if (checkDuplicates(personObject) === false)
     {
-      //console.log('hi')
       setPersons(persons.concat(personObject))
     }
     else{
       alert(`${personObject.name} is already added to phonebook`)
     }
-    console.log('hi')
     setNewName('')
     setNewNumber('')
-    //console.log(persons)
   }
 
   const handleInputChange = (event) => {
-    console.log(event.target.id)
     switch (event.target.id) {
       case 'name':
         setNewName(event.target.value);
@@ -65,10 +60,8 @@ const App = () => {
 
   const checkDuplicates  = (personObject) => {
     const result = persons.some((person) => {
-      //console.log('person.name === personObject.name',person.name === personObject.name)
       return person.name === personObject.name
     });
-    //console.log('result',result)
     return result
   }
 
