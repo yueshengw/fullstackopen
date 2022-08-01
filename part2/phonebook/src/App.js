@@ -1,43 +1,9 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import DisplayPersons from './components/DisplayPersons'
 
-const Filter = ({ onChange, value, id }) => {
-  return (
-  <form onSubmit={(event) => {event.preventDefault()}}>
-      <div>
-        filter shown with <input onChange={onChange} value={value} id={id}/>
-      </div>
-    </form>
-  )
-}
-
-const PersonForm = ({onChange, nameValue, numberValue, onSubmit}) => {
-  return (      
-    <form>
-      <div>
-        name: <input onChange={onChange} value={nameValue} id='name' />
-      </div>
-      <div>
-        number: <input onChange={onChange} value={numberValue} id='number' />
-      </div>
-      <div>
-        <button type="submit" onClick={onSubmit}>add</button>
-      </div>
-    </form>
-  )
-}
-
-const DisplayPersons = ({persons, filter}) => {
-  return(
-    <div> 
-    {persons.map(person => {
-      const displayContactFormat = <div key={person.name}>{person.name} {person.number !== undefined && person.number}</div>;
-      return filter===''?displayContactFormat:person.name.toLowerCase().includes(filter
-        .toLowerCase()) && displayContactFormat
-    })}
-    </div>
-  )
-}
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
