@@ -11,13 +11,30 @@ const App = () => {
     const personObject = {
       name:newName
     }
-    setPersons(persons.concat(personObject))
+     //false is no duplicates
+    if (checkDuplicates(personObject) === false)
+    {
+      console.log('hi')
+      setPersons(persons.concat(personObject))
+    }
+    else{
+      alert(`${personObject.name} is already added to phonebook`)
+    }
     setNewName('')
     console.log(persons)
   }
 
   const handleInputChange = (event) => {
     setNewName(event.target.value)
+  }
+
+  const checkDuplicates  = (personObject) => {
+    const result = persons.some((person) => {
+      //console.log('person.name === personObject.name',person.name === personObject.name)
+      return person.name === personObject.name
+    });
+    console.log('result',result)
+    return result
   }
 
   return (
