@@ -90,3 +90,4 @@ const arto = {
   ]
 
   console.log(notes.map(note => note.content))
+
