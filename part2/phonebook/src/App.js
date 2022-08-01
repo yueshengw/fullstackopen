@@ -5,13 +5,18 @@ const App = () => {
     { name: 'Arto Hellas' }
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+
+  console.log(newNumber)
 
   const onSubmit = (event) => {
     event.preventDefault()
     const personObject = {
-      name:newName
+      name:newName,
+      number:newNumber
     }
-     //false is no duplicates
+
+     //false is no duplicates (based on name)
     if (checkDuplicates(personObject) === false)
     {
       console.log('hi')
@@ -21,11 +26,20 @@ const App = () => {
       alert(`${personObject.name} is already added to phonebook`)
     }
     setNewName('')
+    setNewNumber('')
     console.log(persons)
   }
 
   const handleInputChange = (event) => {
-    setNewName(event.target.value)
+    console.log(event.target.id)
+    switch (event.target.id) {
+      case 'name':
+        setNewName(event.target.value);
+        break;
+      case 'number':
+        setNewNumber(event.target.value);
+        break;
+    }
   }
 
   const checkDuplicates  = (personObject) => {
@@ -42,7 +56,10 @@ const App = () => {
       <h2>Phonebook</h2>
       <form>
         <div>
-          name: <input onChange={handleInputChange} value={newName}/>
+          name: <input onChange={handleInputChange} value={newName} id='name' />
+        </div>
+        <div>
+          number: <input onChange={handleInputChange} value={newNumber} id='number' />
         </div>
         <div>
           <button type="submit" onClick={onSubmit}>add</button>
@@ -50,7 +67,7 @@ const App = () => {
 
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => {return <div key={person.name}>{person.name}</div>})}
+      {persons.map(person => {return <div key={person.name}>{person.name} {person.number != undefined && person.number}</div>})}
     </div>
   )
 }
