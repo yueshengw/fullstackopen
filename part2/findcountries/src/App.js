@@ -13,14 +13,14 @@ const SearchForm = ({ input, onSubmit, onChange, data }) => {
 }
 
 const DisplayOutput = ({ data, filter }) => {
-  let output = data.map(countries => {
-    filter === '' ? <h1 key={countries.name.official}>{countries.name.official}</h1> : countries.name.official.toLowerCase().includes(filter.toLowerCase()) && <h1 key={countries.name.official}>{countries.name.official}</h1>
-  });
+  let output = data.map(country => {
+    return filter === '' ? <div key={country.name.official}>{country.name.official}</div> : country.name.official.toLowerCase().includes(filter.toLowerCase()) && <div key={country.name.official}>{country.name.official}</div>
+  }).filter(output => output !== false);
   console.log(output)
 
   return (
     <div>
-      {output.length > 10000000 ? <div>Too many matches, specify another filter</div> : output}
+      {filter === '' ? <div>Enter letters to start</div> : output.length > 10 ? <div>Too many matches, specify another filter</div> : output.length === 0 ? <div>No match</div> : output}
     </div>
   )
 }
