@@ -21,6 +21,7 @@ const App = () => {
         }
       )
   }, [])
+  
   useEffect(() => {
     console.log(filter)
   },[filter])
@@ -39,7 +40,14 @@ const App = () => {
      //false is no duplicates (based on name)
     if (checkDuplicates(personObject) === false)
     {
-      setPersons(persons.concat(personObject))
+      // setPersons(persons.concat(personObject))
+      axios
+        .post('http://localhost:3001/persons',personObject)
+        .then(response => {
+          //alert(`${response.data.name} was added!`)
+          console.log(response.data)
+          setPersons(persons.concat(response.data))
+        })
     }
     else{
       alert(`${personObject.name} is already added to phonebook`)
