@@ -4,16 +4,20 @@ import { useState, useEffect } from 'react'
 
 const DisplayWeather = ({ country }) => {
   const [weatherData, setWeatherData] = useState([])
+  const [weatherIconSRC, setWeatherIconSRC] = useState('')
+
   useEffect(() => {
     const api_key = process.env.REACT_APP_API_KEY
     if (weatherData.length === 0) {
-      console.log(`https://api.openweathermap.org/data/2.5/weather?q=${country.capital}& appid=${api_key}`)
-      if (country.capital.includes(' ') === false) {
+      console.log(`https://api.openweathermap.org/data/2.5/weather?q=${country.capital}&appid=${api_key}`)
+      if (country.capital != undefined) {
         axios
-          .get(`https://api.openweathermap.org/data/2.5/weather?q=${country.capital}& appid=${api_key}`)
+          .get(`https://api.openweathermap.org/data/2.5/weather?q=${country.capital}&appid=${api_key}`)
           .then(response => {
             setWeatherData(response.data)
-            console.log(country.capital, weatherData)
+            setWeatherIconSRC(`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`)
+            console.log(country.capital, response.data)
+            console.log(`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`)
           })
       }
     }
@@ -26,15 +30,16 @@ const DisplayWeather = ({ country }) => {
 
   return (
     <>
-      {weatherData.length !== 0 ? <>
+      {(weatherData.length !== 0 && country.capital != undefined) ? <>
         <h2>Weather in {country.name.official}</h2>
         <h3>Temperature: {kelvinToFahrenheit(weatherData.main.temp)} Fahrenheit</h3>
-        <img src={`http://openweathermap.org/img/wn/${weatherData.weather.icon}@2x.png`} />
+        <img src={weatherIconSRC} />
         <h3>Speed: {weatherData.wind.speed} m/s</h3>
       </> : <h2>Not found</h2>}
     </>
   )
 }
+//<img src={weatherIconSRC} />
 
 const SearchForm = ({ input, onSubmit, onChange, data }) => {
   return (
@@ -77,11 +82,13 @@ const Country = ({ country, show }) => {
           <h2>Continent: {country.continents}</h2>
           {languages.length === 1 ? <h2>Language </h2> : <h2>Languages</h2>}
           <ul>{languages.map(language => <li key={language}><h3>{language}</h3></li>)}</ul>
-          <img src={country.flags.png} /></>}
+          <img src={country.flags.png} />
+          <DisplayWeather country={country} show={shouldShow} />
+        </>}
     </>
   )
 }
-//<DisplayWeather country={country} show={shouldShow} />
+
 const DisplayOutput = ({ data, filter }) => {
   let output = data.map(country => {
     return filter === '' ? <div key={country.name.official}>{country.name.official}</div> : country.name.official.toLowerCase().includes(filter.toLowerCase()) && <div key={country.name.official}>{country.name.official}</div>

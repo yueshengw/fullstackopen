@@ -91,3 +91,49 @@ const arto = {
 
   console.log(notes.map(note => note.content))
 
+
+  let test = {
+    "coord": {
+        "lon": -70.6483,
+        "lat": -33.4569
+    },
+    "weather": [
+        {
+            "id": 721,
+            "main": "Haze",
+            "description": "haze",
+            "icon": "50d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 286.27,
+        "feels_like": 285.28,
+        "temp_min": 280.68,
+        "temp_max": 288.14,
+        "pressure": 1018,
+        "humidity": 63
+    },
+    "visibility": 3000,
+    "wind": {
+        "speed": 1.54,
+        "deg": 320
+    },
+    "clouds": {
+        "all": 100
+    },
+    "dt": 1659448579,
+    "sys": {
+        "type": 2,
+        "id": 2075413,
+        "country": "CL",
+        "sunrise": 1659439998,
+        "sunset": 1659477857
+    },
+    "timezone": -14400,
+    "id": 3871336,
+    "name": "Santiago",
+    "cod": 200
+}
+
+console.log(test.weather[0].icon)
