@@ -78,11 +78,10 @@ const Country = ({ country, show }) => {
           {languages.length === 1 ? <h2>Language </h2> : <h2>Languages</h2>}
           <ul>{languages.map(language => <li key={language}><h3>{language}</h3></li>)}</ul>
           <img src={country.flags.png} /></>}
-      <DisplayWeather country={country} show={shouldShow} />
     </>
   )
 }
-
+//<DisplayWeather country={country} show={shouldShow} />
 const DisplayOutput = ({ data, filter }) => {
   let output = data.map(country => {
     return filter === '' ? <div key={country.name.official}>{country.name.official}</div> : country.name.official.toLowerCase().includes(filter.toLowerCase()) && <div key={country.name.official}>{country.name.official}</div>
