@@ -2,11 +2,45 @@ import React from 'react'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
+const DisplayWeather = ({ country }) => {
+  const [weatherData, setWeatherData] = useState([])
+  useEffect(() => {
+    const api_key = process.env.REACT_APP_API_KEY
+    if (weatherData.length === 0) {
+      console.log(`https://api.openweathermap.org/data/2.5/weather?q=${country.capital}& appid=${api_key}`)
+      if (country.capital.includes(' ') === false) {
+        axios
+          .get(`https://api.openweathermap.org/data/2.5/weather?q=${country.capital}& appid=${api_key}`)
+          .then(response => {
+            setWeatherData(response.data)
+            console.log(country.capital, weatherData)
+          })
+      }
+    }
+  }, [])
+
+  const kelvinToFahrenheit = (ke) => {
+    let temp = (ke - 273.15) * 9 / 5 + 32
+    return Math.round(100 * temp) / 100
+  }
+
+  return (
+    <>
+      {weatherData.length !== 0 ? <>
+        <h2>Weather in {country.name.official}</h2>
+        <h3>Temperature: {kelvinToFahrenheit(weatherData.main.temp)} Fahrenheit</h3>
+        <img src={`http://openweathermap.org/img/wn/${weatherData.weather.icon}@2x.png`} />
+        <h3>Speed: {weatherData.wind.speed} m/s</h3>
+      </> : <h2>Not found</h2>}
+    </>
+  )
+}
+
 const SearchForm = ({ input, onSubmit, onChange, data }) => {
   return (
     <form onSubmit={onSubmit}>
       <div>
-        find countries: <input value={input} onChange={onChange} />
+        Find countries: <input value={input} onChange={onChange} />
       </div>
     </form>
   )
@@ -20,7 +54,7 @@ const Country = ({ country, show }) => {
   for (const key in country.languages) {
     languages.push(country.languages[key])
   }
-  console.log(shouldShow, country)
+  //console.log(shouldShow, country)
   const toggleShouldShow = () => {
     console.log('pressed')
 
@@ -44,6 +78,7 @@ const Country = ({ country, show }) => {
           {languages.length === 1 ? <h2>Language </h2> : <h2>Languages</h2>}
           <ul>{languages.map(language => <li key={language}><h3>{language}</h3></li>)}</ul>
           <img src={country.flags.png} /></>}
+      <DisplayWeather country={country} show={shouldShow} />
     </>
   )
 }
@@ -56,7 +91,7 @@ const DisplayOutput = ({ data, filter }) => {
   //this is to find the country object
   const findCountryInfo = (officialName) => {
     let tempData = [...data]
-    console.log(officialName)
+    //console.log(officialName)
     return tempData.filter(country => country.name.official === officialName)
   }
 
