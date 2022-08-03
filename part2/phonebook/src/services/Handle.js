@@ -11,10 +11,8 @@ const getAll = (URL) => {
 }
 
 const add = (URL,personObject) => {
-    axios
-        .post(URL,personObject)
-        .then(response => response.data
-    )
+    let req = axios.post(URL,personObject)
+    return req.then(response => response.data)
 }
 
 const update = () => {

@@ -14,8 +14,12 @@ const App = () => {
   const backendURL = "http://localhost:3001/persons"
 
   useEffect(() => {
-    console.log('test 2', handleService.getAll(backendURL))
-    setPersons(handleService.getAll(backendURL))
+    // console.log('test 2', handleService.getAll(backendURL))
+    handleService.getAll(backendURL)
+      .then(returnData => {
+        console.log('test 4',returnData)
+        setPersons(returnData)
+      })
     console.log('test 3', persons)
   }, [])
   
@@ -39,13 +43,18 @@ const App = () => {
     {
       // setPersons(persons.concat(personObject))
       //setPersons(persons.handleService(backendURL))
-      axios
-        .post('http://localhost:3001/persons',personObject)
-        .then(response => {
-          //alert(`${response.data.name} was added!`)
-          console.log('test 1',response.data)
-          setPersons(persons.concat(response.data))
-        })
+      // axios
+      //   .post('http://localhost:3001/persons',personObject)
+      //   .then(response => {
+      //     //alert(`${response.data.name} was added!`)
+      //     console.log('test 1',response.data)
+      //     setPersons(persons.concat(response.data))
+      //   })
+      handleService
+        .add(backendURL,personObject)
+        .then(returnData => {
+          console.log('test 6',returnData)
+          checkDuplicates(returnData)===false && setPersons(persons.concat(returnData))})
     }
     else{
       alert(`${personObject.name} is already added to phonebook`)
@@ -71,9 +80,8 @@ const App = () => {
   }
 
   const checkDuplicates  = (personObject) => {
-    const result = persons.some((person) => {
-      return person.name === personObject.name
-    });
+    console.log('test 5',personObject)
+    const result = persons.some((person) => person.name === personObject.name);
     return result
   }
 
@@ -84,7 +92,7 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm onChange={handleInputChange} nameValue={newName} numberValue={newNumber} onSubmit={onSubmit}/>
       <h2>Numbers</h2>
-      {/* <DisplayPersons persons={persons} filter={filter}/> */}
+      <DisplayPersons persons={persons} filter={filter}/>
     </div>
   )
 }
