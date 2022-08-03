@@ -4,22 +4,19 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import DisplayPersons from './components/DisplayPersons'
 import axios from 'axios'
+import handleService from './services/Handle'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const backendURL = "http://localhost:3001/persons"
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then(
-        (response) => {
-          console.log(response.data)
-          setPersons(response.data)
-        }
-      )
+    console.log('test 2', handleService.getAll(backendURL))
+    setPersons(handleService.getAll(backendURL))
+    console.log('test 3', persons)
   }, [])
   
   useEffect(() => {
@@ -41,11 +38,12 @@ const App = () => {
     if (checkDuplicates(personObject) === false)
     {
       // setPersons(persons.concat(personObject))
+      //setPersons(persons.handleService(backendURL))
       axios
         .post('http://localhost:3001/persons',personObject)
         .then(response => {
           //alert(`${response.data.name} was added!`)
-          console.log(response.data)
+          console.log('test 1',response.data)
           setPersons(persons.concat(response.data))
         })
     }
@@ -86,7 +84,7 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm onChange={handleInputChange} nameValue={newName} numberValue={newNumber} onSubmit={onSubmit}/>
       <h2>Numbers</h2>
-      <DisplayPersons persons={persons} filter={filter}/>
+      {/* <DisplayPersons persons={persons} filter={filter}/> */}
     </div>
   )
 }
