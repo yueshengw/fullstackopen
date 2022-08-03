@@ -85,6 +85,8 @@ const App = () => {
     return result
   }
 
+  const deleteContact = () => {}
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -92,7 +94,7 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm onChange={handleInputChange} nameValue={newName} numberValue={newNumber} onSubmit={onSubmit}/>
       <h2>Numbers</h2>
-      <DisplayPersons persons={persons} filter={filter}/>
+      <DisplayPersons persons={persons} filter={filter} onClick={deleteContact}/>
     </div>
   )
 }
