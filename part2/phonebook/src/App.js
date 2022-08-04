@@ -5,12 +5,14 @@ import PersonForm from './components/PersonForm'
 import DisplayPersons from './components/DisplayPersons'
 import axios from 'axios'
 import handleService from './services/Handle'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notification, setNotification] = useState(null)
   const backendURL = "http://localhost:3001/persons"
 
   useEffect(() => {
@@ -55,7 +57,10 @@ const App = () => {
         .then(returnData => {
           console.log('test 6',returnData)
           // checkDuplicates(returnData)===false && 
-          setPersons(persons.concat(returnData))})
+          setPersons(persons.concat(returnData))
+          setNotification(`${returnData.name} was added successfully!`)
+          setTimeout(() =>setNotification(null),5000)
+        })
     }
     else{
       // alert(`${personObject.name} is already added to phonebook`)
@@ -111,6 +116,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification}/>
       <Filter onChange={handleInputChange} value={filter} id='filter' />
       <h2>add a new</h2>
       <PersonForm onChange={handleInputChange} nameValue={newName} numberValue={newNumber} onSubmit={onSubmit}/>
