@@ -85,7 +85,15 @@ const App = () => {
     return result
   }
 
-  const deleteContact = () => {}
+  const deleteContact = (personObject) => {
+    handleService
+      .deleteContact(backendURL,personObject)
+      .then(returnData => {
+        console.log('return data',returnData)
+        setPersons(persons.filter(person => person.id != personObject.id))
+        console.log('contact list',persons)
+      })
+  }
 
   return (
     <div>

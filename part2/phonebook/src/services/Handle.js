@@ -19,4 +19,11 @@ const update = () => {
 
 }
 
-export default { getAll, add, update };
+const deleteContact = (URL, personObject) => {
+    console.log(personObject)
+    let req = axios.delete(`${URL}/${personObject.id}`)
+    return req.then(response => {
+        console.log(response)
+        return response.data})
+}
+export default { getAll, add, update, deleteContact };

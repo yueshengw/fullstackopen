@@ -4,7 +4,7 @@ const DisplayPersons = ({persons, filter, onClick}) => {
     return(
       <div> 
       {persons.map((person,index) => {
-        const displayContactFormat = <div key={person.name}><>{person.name} {person.number !== undefined && person.number}<button onClick={() =>onClick(person.id)}>delete</button></></div>;
+        const displayContactFormat = <div key={person.name}><>{person.name} {person.number !== undefined && person.number}<button onClick={() =>onClick(person)}>delete</button></></div>;
         return filter===''?displayContactFormat:person.name.toLowerCase().includes(filter
           .toLowerCase()) && displayContactFormat
       })}
