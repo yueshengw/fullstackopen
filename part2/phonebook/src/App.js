@@ -86,6 +86,7 @@ const App = () => {
   }
 
   const deleteContact = (personObject) => {
+    window.confirm(`Do you really want to delete ${personObject.name}`) &&
     handleService
       .deleteContact(backendURL,personObject)
       .then(returnData => {

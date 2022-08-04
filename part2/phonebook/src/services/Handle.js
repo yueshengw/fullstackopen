@@ -15,8 +15,11 @@ const add = (URL,personObject) => {
     return req.then(response => response.data)
 }
 
-const update = () => {
-
+const update = (URL,personObject) => {
+    let req = axios.put(`${URL}/${personObject.id}`,personObject)
+    return req.then(response => {
+        console.log('update',response.data)
+    return response.data})
 }
 
 const deleteContact = (URL, personObject) => {
