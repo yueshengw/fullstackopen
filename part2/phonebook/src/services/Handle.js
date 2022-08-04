@@ -12,10 +12,13 @@ const getAll = (URL) => {
 
 const add = (URL,personObject) => {
     let req = axios.post(URL,personObject)
-    return req.then(response => response.data)
+    return req.then(response => {
+        console.log('add',response)
+        return response.data})
 }
 
 const update = (URL,personObject) => {
+    console.log('test 7',personObject)
     let req = axios.put(`${URL}/${personObject.id}`,personObject)
     return req.then(response => {
         console.log('update',response.data)

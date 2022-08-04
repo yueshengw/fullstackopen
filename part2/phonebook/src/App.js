@@ -54,10 +54,22 @@ const App = () => {
         .add(backendURL,personObject)
         .then(returnData => {
           console.log('test 6',returnData)
-          checkDuplicates(returnData)===false && setPersons(persons.concat(returnData))})
+          // checkDuplicates(returnData)===false && 
+          setPersons(persons.concat(returnData))})
     }
     else{
-      alert(`${personObject.name} is already added to phonebook`)
+      // alert(`${personObject.name} is already added to phonebook`)
+      if (window.confirm(`${personObject.name} is already added to phonebook, do you want to replace the existing number?`)) {
+        personObject.id = persons.find(person => person.name === personObject.name).id;
+        handleService 
+          .update(backendURL, personObject)
+          .then(returnData => {
+            console.log('test 10',returnData)
+            handleService
+              .getAll(backendURL)
+              .then(returnData => setPersons(returnData))            
+          })
+      }
     }
     setNewName('')
     setNewNumber('')
