@@ -1,8 +1,9 @@
 import React from 'react'
 
 const Notification = ({message}) => {
+    console.log('message',message[1])
   return (
-    message != null && <div className="notification">{message}</div>
+    message[0] != null && <div className={message[1]}>{message[0]}</div>
   )
 }
 

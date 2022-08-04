@@ -12,7 +12,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
-  const [notification, setNotification] = useState(null)
+  const [notification, setNotification] = useState([null,'notification']) //message and style
   const backendURL = "http://localhost:3001/persons"
 
   useEffect(() => {
@@ -74,6 +74,7 @@ const App = () => {
               .getAll(backendURL)
               .then(returnData => setPersons(returnData))            
           })
+          .catch(() => setNotification([`Information of ${personObject.name} has already been deleted from the server`, 'notification error']))
       }
     }
     setNewName('')
