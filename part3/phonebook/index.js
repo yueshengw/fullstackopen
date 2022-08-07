@@ -63,9 +63,15 @@ function generateId() {
 
 app.post("/api/persons", (req, res) => {
   const body = req.body
-  console.log(body)
+
   if (!body.name) {
-    return res.status(404).json({error:"content missing"})
+    return res.status(404).json({error:"name missing"})
+  }
+  else if (!body.number) {
+    return res.status(404).json({error:"number missing"})
+  }
+  else if (persons.some(person => person.name === body.name)) {
+    return res.status(404).json({error:"name already exists in phonebook"})
   }
 
   const person = {
@@ -73,6 +79,7 @@ app.post("/api/persons", (req, res) => {
     "name": body.name,
     "number": body.number
   }
+  
   persons = persons.concat(person)
   res.json(person)
 })
