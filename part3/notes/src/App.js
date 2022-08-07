@@ -58,7 +58,7 @@ const App = () => {
   }, [])
 
   const toggleImportanceOf = id => {
-    const url = `http://localhost:3001/notes/${id}`
+    const url = `https://boiling-everglades-30714.herokuapp.com/api/notes/${id}`
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
   
@@ -86,7 +86,7 @@ const App = () => {
   const notesToShow = showAll ? notes : notes.filter(note => note.important)
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Notes (test 2)</h1>
       <Notification message={errorMessage}/>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
