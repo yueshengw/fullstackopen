@@ -2,7 +2,6 @@ const express = require("express")
 const morgan = require("morgan")
 const app = express()
 app.use(express.json())
-app.use(morgan('tiny'))
 let persons = [
     { 
       "id": 1,
@@ -61,7 +60,11 @@ function generateId() {
   }
   return tempNum
 }
-
+morgan.token("data", (req, res) => {
+  const { body } = req;
+  return JSON.stringify(body);
+})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 app.post("/api/persons", (req, res) => {
   const body = req.body
 
