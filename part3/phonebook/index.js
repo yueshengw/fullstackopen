@@ -52,5 +52,30 @@ app.delete("/api/persons/:id", (req, res) => {
     console.log(persons)
     res.status(204).end()
 })
+
+function generateId() {
+  let tempNum = Math.ceil(Math.random() * 1000)
+  while (persons.some(person => person.id === tempNum)) {
+    tempNum = Math.ceil(Math.random() * 1000)
+  }
+  return tempNum
+}
+
+app.post("/api/persons", (req, res) => {
+  const body = req.body
+  console.log(body)
+  if (!body.name) {
+    return res.status(404).json({error:"content missing"})
+  }
+
+  const person = {
+    "id": generateId(),
+    "name": body.name,
+    "number": body.number
+  }
+  persons = persons.concat(person)
+  res.json(person)
+})
+
 const PORT = 3008
 app.listen(PORT)
