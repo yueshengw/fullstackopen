@@ -86,7 +86,7 @@ const App = () => {
   const notesToShow = showAll ? notes : notes.filter(note => note.important)
   return (
     <div>
-      <h1>Notes (test 2)</h1>
+      <h1>Notes</h1>
       <Notification message={errorMessage} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
