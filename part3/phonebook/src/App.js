@@ -17,7 +17,7 @@ const App = () => {
   //const backendURL = "http://localhost:3008/api/persons"
   useEffect(() => {
     // console.log('test 2', handleService.getAll(backendURL))
-    handleService.getAll(backendURL)
+    handleService.getAll()
       .then(returnData => {
         console.log('test 4',returnData)
         setPersons(returnData)
@@ -53,7 +53,7 @@ const App = () => {
       //     setPersons(persons.concat(response.data))
       //   })
       handleService
-        .add(backendURL,personObject)
+        .add(personObject)
         .then(returnData => {
           console.log('test 6',returnData)
           // checkDuplicates(returnData)===false && 
@@ -67,11 +67,11 @@ const App = () => {
       if (window.confirm(`${personObject.name} is already added to phonebook, do you want to replace the existing number?`)) {
         personObject.id = persons.find(person => person.name === personObject.name).id;
         handleService 
-          .update(backendURL, personObject)
+          .update(personObject)
           .then(returnData => {
             console.log('test 10',returnData)
             handleService
-              .getAll(backendURL)
+              .getAll()
               .then(returnData => setPersons(returnData))            
           })
           .catch(() => setNotification([`Information of ${personObject.name} has already been deleted from the server`, 'notification error']))
@@ -106,7 +106,7 @@ const App = () => {
   const deleteContact = (personObject) => {
     window.confirm(`Do you really want to delete ${personObject.name}`) &&
     handleService
-      .deleteContact(backendURL,personObject)
+      .deleteContact(personObject)
       .then(returnData => {
         console.log('return data',returnData)
         setPersons(persons.filter(person => person.id != personObject.id))

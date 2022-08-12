@@ -1,8 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 
-const getAll = (URL) => {
-    let req = axios.get(URL)
+const baseURL = 'https://pure-garden-08206.herokuapp.com/api/persons'
+const getAll = () => {
+    console.log('test 1a')
+    let req = axios.get(baseURL)
     return req.then(
       (response) => {
         console.log(response.data)
@@ -10,24 +12,24 @@ const getAll = (URL) => {
     )
 }
 
-const add = (URL,personObject) => {
-    let req = axios.post(URL,personObject)
+const add = (personObject) => {
+    let req = axios.post(baseURL,personObject)
     return req.then(response => {
         console.log('add',response)
         return response.data})
 }
 
-const update = (URL,personObject) => {
+const update = (personObject) => {
     console.log('test 7',personObject)
-    let req = axios.put(`${URL}/${personObject.id}`,personObject)
+    let req = axios.put(`${baseURL}/${personObject.id}`,personObject)
     return req.then(response => {
         console.log('update',response.data)
     return response.data})
 }
 
-const deleteContact = (URL, personObject) => {
+const deleteContact = (personObject) => {
     console.log(personObject)
-    let req = axios.delete(`${URL}/${personObject.id}`)
+    let req = axios.delete(`${baseURL}/${personObject.id}`)
     return req.then(response => {
         console.log(response)
         return response.data})
