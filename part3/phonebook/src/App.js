@@ -58,13 +58,18 @@ const App = () => {
           console.log('test 6',returnData)
           // checkDuplicates(returnData)===false && 
           setPersons(persons.concat(returnData))
-          setNotification(`${returnData.name} was added successfully!`)
-          setTimeout(() =>setNotification(null),5000)
+          setNotification([`${returnData.name} was added successfully!`,'notification'])
+          setTimeout(() => setNotification([null, null]), 5000)
+        })
+        .catch(error => {
+          console.log('error 4040404',error)
+          setNotification([error.response.data.error,'notification error'])
+          setTimeout(() => setNotification([null, null]), 5000)
         })
     }
     else{
       // alert(`${personObject.name} is already added to phonebook`)
-      if (window.confirm(`${personObject.name} is already added to phonebook, do you want to replace the existing number?`)) {
+      if (window.confirm(`${personObject.name} is already added to phonebook, do you want to update the existing number?`)) {
         personObject.id = persons.find(person => person.name === personObject.name).id;
         handleService 
           .update(personObject)
