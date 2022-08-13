@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
-const baseURL = 'https://pure-garden-08206.herokuapp.com/api/persons'
+const baseURL = '/api/persons'
 const getAll = () => {
     console.log('test 1a')
     let req = axios.get(baseURL)
