@@ -20,6 +20,6 @@
     "nodemon": "^2.0.19"
   },
   "jest": {
-    "devEnvironment": "node"
+    "testEnvironment": "node"
   }
 }
